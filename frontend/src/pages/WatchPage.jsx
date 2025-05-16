@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { useContentStore } from '../store/useAuthStore.js';
 import Navbar from '../components/Navbar.jsx';
 import axios from "axios";
+const baseUrl = import.meta.env.VITE_BASE_URL;
 
 
 
@@ -17,7 +18,7 @@ const WatchPage = () => {
         const getTrailers = async () => {
             
 			try {
-				const res = await axios.get(`/api/v1/searchbyid/${id}`)
+				const res = await axios.get(`${baseUrl}/api/v1/searchbyid/${id}`)
 				setTrailers(res.data.content);    
 			} catch (error) {
                 console.log(error.message)

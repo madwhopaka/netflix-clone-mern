@@ -3,6 +3,8 @@ import { useContentStore } from "../store/useAuthStore.js"
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { ChevronLeft,ChevronRight } from "lucide-react";
+const baseUrl = import.meta.env.VITE_BASE_URL;
+
 
 function MovieSlider({category}) {
     const {contentType} = useContentStore();
@@ -17,7 +19,7 @@ function MovieSlider({category}) {
 
     useEffect(()=>{
         const getContent = async()=>{
-            const res = await axios.get(`/api/v1/${contentType}/${category}`)
+            const res = await axios.get(`${baseUrl}/api/v1/${contentType}/${category}`)
             setContent(res.data.content)
         }
         getContent()

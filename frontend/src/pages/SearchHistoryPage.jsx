@@ -4,6 +4,8 @@ import Navbar from "../components/Navbar";
 import { Trash } from "lucide-react";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
+const baseUrl = import.meta.env.VITE_BASE_URL;
+
 
 function formatDate(dateString) {
 	// Create a Date object from the input date string
@@ -26,7 +28,7 @@ const SearchHistoryPage = () => {
 	useEffect(() => {
 		const getSearchHistory = async () => {
 			try {
-                const res = await axios.get(`/api/v1/search/all/history`);
+                const res = await axios.get(`${baseUrl}/api/v1/search/all/history`);
 				setSearchHistory(res.data.content);
 			} catch (error) {
 				setSearchHistory([]);
@@ -37,7 +39,7 @@ const SearchHistoryPage = () => {
 
 	const handleDelete = async (entry) => {
 		try {
-            await axios.delete(`/api/v1/search/history/${entry.id}`)
+            await axios.delete(`${baseUrl}/api/v1/search/history/${entry.id}`)
 			setSearchHistory(searchHistory.filter((item) => item.id !== entry.id));
 		} catch (error) {
 			toast.error("Failed to delete search item");

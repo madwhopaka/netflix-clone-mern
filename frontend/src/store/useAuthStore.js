@@ -1,6 +1,8 @@
 import toast from "react-hot-toast";
 import {create} from "zustand";
 import axios from "axios";
+const baseUrl = import.meta.env.VITE_BASE_URL;
+
 
 export const useAuthStore = create((set)=>({
     user:null,
@@ -12,40 +14,40 @@ export const useAuthStore = create((set)=>({
     signup: async (formData) => {
         set({isSigningUp:true});
         try {
-            const response = await axios.post("/api/v1/auth/signup", formData);
+            const response = await axios.post(`${baseUrl}/api/v1/auth/signup`, formData);
             set({ user:response.data.user, isSigningUp:false})
-             toast.success("signup successfull")
+             toast.success(`signup successfull`)
         } catch (error) {
             set({isSigningUp:false, user:null})
-            toast.error(error.response.data.message || "An error occured")
+            toast.error(error.response.data.message || `An error occured`)
         }
     },
     signin: async (formData) => {
         set({isSigningIn:true});
         try {
-            const response = await axios.post("/api/v1/auth/signin", formData);
+            const response = await axios.post(`${baseUrl}/api/v1/auth/signin`, formData);
             set({ user:response.data.user, isSigningIn:false})
-             toast.success("signup successfull")
+             toast.success(`signup successfull`)
         } catch (error) {
             set({isSigningIn:false, user:null})
-            toast.error(error.response.data.message || "An error occured")
+            toast.error(error.response.data.message || `An error occured`)
         }
     },    
     logout: async ()=>{
         set({islogingOut:true})
         try {
-            await axios.get("/api/v1/auth/logout")
+            await axios.get(`${baseUrl}/api/v1/auth/logout`)
             set({user:null,islogingOut:false})
-            toast.success("logout successfully")
+            toast.success(`logout successfully`)
         } catch (error) {
             set({islogingOut:false})
-            toast.error(error.response.data.message || "an occured during logout")
+            toast.error(error.response.data.message || `an occured during logout`)
         }
     },
     authCheck: async ()=>{
         set({isCheckingAuth:true})
         try {
-            const response = await axios.get("/api/v1/auth/authCheck")
+            const response = await axios.get("${baseUrl}/api/v1/auth/authCheck")
             set({user:response.data.user, isCheckingAuth:false})
         } catch (error) {
             set({isCheckingAuth:false,user:null})   
